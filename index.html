@@ -6,187 +6,303 @@
 <title>Happy Birthday Boomi 💖</title>
 
 <style>
-body{
+*{
   margin:0;
-  font-family:'Cursive',sans-serif;
-  background:url('home.jpeg') no-repeat center center fixed;
-  background-size:cover;
-  color:white;
-  text-align:center;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
 }
 
-/* Tap Screen */
-#tap{
+body{
+  background:linear-gradient(135deg,#fff0f6,#ffe4ec);
+  color:#7a003c;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* TAP SCREEN */
+#tapScreen{
   position:fixed;
   inset:0;
-  background:rgba(255,192,203,0.95);
+  background:#fff0f6;
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:9999;
-  font-size:1.6em;
-  color:#b30059;
+  font-size:22px;
+  color:#d6336c;
+  text-align:center;
   cursor:pointer;
-  animation:pulse 1.5s infinite;
 }
 
-header{
-  font-size:2em;
-  margin-top:15px;
-  text-shadow:2px 2px 6px black;
-  animation:heartbeat 2s infinite;
+/* SLIDESHOW BACKGROUND */
+.slideshow{
+  position:fixed;
+  inset:0;
+  z-index:-2;
 }
-
-.dialogues{
-  background:rgba(255,255,255,0.2);
-  margin:15px;
-  padding:15px;
-  border-radius:20px;
-  font-size:1.2em;
-  backdrop-filter:blur(5px);
-}
-
-/* Image slider */
-.image-box{
-  position:relative;
-  width:90%;
-  max-width:300px;
-  margin:0 auto;
-}
-
-.image-box img{
+.slideshow img{
+  position:absolute;
   width:100%;
-  border-radius:25px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.6);
-  animation:fade 12s infinite;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  animation:fade 24s infinite;
+  filter:brightness(0.9);
 }
-
-.caption{
-  font-style:italic;
-  margin:15px;
-  text-shadow:1px 1px 4px black;
-}
-
-.buttons{
-  margin-bottom:20px;
-}
-
-button{
-  border:none;
-  padding:12px 20px;
-  border-radius:30px;
-  background:#ff4d6d;
-  color:white;
-  font-size:1em;
-  cursor:pointer;
-  margin:8px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.4);
-}
-
-button:hover{
-  background:#ff1f4a;
-}
-
-@keyframes heartbeat{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.2);}
-}
-
-@keyframes pulse{
-  0%,100%{opacity:1;}
-  50%{opacity:0.6;}
-}
+.slideshow img:nth-child(1){animation-delay:0s;}
+.slideshow img:nth-child(2){animation-delay:6s;}
+.slideshow img:nth-child(3){animation-delay:12s;}
+.slideshow img:nth-child(4){animation-delay:18s;}
 
 @keyframes fade{
   0%{opacity:0;}
-  10%{opacity:1;}
-  30%{opacity:1;}
-  40%{opacity:0;}
-  100%{opacity:0;}
+  8%{opacity:1;}
+  25%{opacity:1;}
+  33%{opacity:0;}
+}
+
+/* WHITE OVERLAY */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(255,255,255,0.75);
+  z-index:-1;
+}
+
+/* CONTENT */
+.content{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:24px 16px;
+  animation:fadeIn 1.8s ease;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+h1{
+  color:#d6336c;
+  font-size:2.4em;
+}
+.cake{
+  font-size:60px;
+  margin:10px 0;
+}
+
+/* PHOTO CARD */
+.photo-card{
+  width:260px;
+  height:360px;
+  background:white;
+  border-radius:25px;
+  box-shadow:0 20px 40px rgba(214,51,108,0.3);
+  overflow:hidden;
+  margin:14px 0 18px;
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
+}
+.photo-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* TEXT */
+#text{
+  max-width:720px;
+  font-size:1.1em;
+  line-height:1.8;
+  min-height:160px;
+  padding:0 6px;
+}
+
+/* BUTTONS */
+.btn{
+  margin-top:12px;
+  padding:14px 28px;
+  border-radius:30px;
+  border:none;
+  background:#ff85a2;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(255,133,162,0.4);
+  transition:.25s;
+}
+.btn:hover{
+  background:#d6336c;
+  transform:scale(1.05);
+}
+
+/* MESSAGE BOX */
+#msgBox{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+}
+#msgInner{
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  width:90%;
+  max-width:360px;
+  text-align:center;
+}
+#msgInner textarea{
+  width:100%;
+  height:100px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  padding:10px;
+  margin-top:10px;
+}
+
+/* FLOATING EMOJIS */
+.float{
+  position:fixed;
+  bottom:-30px;
+  animation:rise linear infinite;
+  opacity:0.85;
+}
+@keyframes rise{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-120vh);opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- Tap to Start -->
-<div id="tap">Tap to feel my love 💗</div>
+<div id="tapScreen">Tap anywhere to begin 💗</div>
 
-<header>Happy Birthday Boomi 💖</header>
-
-<div class="dialogues">
-You entered my life and everything became colorful 🌈<br>
-Even when I misunderstood you, you never left me 🤍<br>
-I still pray for your happiness every single day 🙏
+<div class="slideshow">
+  <img src="boomipic/pic1.jpg">
+  <img src="boomipic/pic2.jpg">
+  <img src="boomipic/pic3.jpg">
+  <img src="boomipic/pic4.jpg">
 </div>
 
-<div class="image-box">
-  <img id="slide" src="boomipic/pic1.jpg">
+<div class="overlay"></div>
+
+<div class="content">
+  <h1>Happy Birthday Boomi 💖</h1>
+  <div class="cake">🎂</div>
+
+  <div class="photo-card">
+    <img id="cardImg" src="boomipic/pic1.jpg">
+  </div>
+
+  <div id="text"></div>
+
+  <button class="btn" onclick="playVoice()">🎧 Do you hear me?</button>
+  <button class="btn" onclick="openMessage()">💌 Message me</button>
 </div>
 
-<div class="caption">
-You are not just special… you are my emotion 💕
-</div>
-
-<div class="buttons">
-  <button onclick="playVoice()">Do you hear me? 🎧</button>
-  <button onclick="openMessage()">Message me 💌</button>
-</div>
-
-<!-- Background Music -->
-<audio id="bgm" loop>
+<!-- AUDIO -->
+<audio id="bgmusic" loop playsinline>
   <source src="bgmusic.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Voice Message -->
-<audio id="voice">
+<audio id="voice" playsinline>
   <source src="voice.mp3" type="audio/mpeg">
 </audio>
 
+<!-- MESSAGE BOX -->
+<div id="msgBox">
+  <div id="msgInner">
+    <h3 style="color:#d6336c;">Send me a message 💗</h3>
+    <textarea id="msgText" placeholder="Type something for me..."></textarea>
+    <br><br>
+    <button class="btn" onclick="sendMail()">Send 💌</button>
+  </div>
+</div>
+
 <script>
-/* Music */
-const tap=document.getElementById("tap");
-const bgm=document.getElementById("bgm");
+/* START MUSIC ON TAP — FIXED */
+const bg=document.getElementById("bgmusic");
+document.getElementById("tapScreen").addEventListener("click",()=>{
+  bg.currentTime=0;
+  bg.play();
+  document.getElementById("tapScreen").style.display="none";
+},{once:true});
 
-tap.onclick=()=>{
-  bgm.play().catch(()=>{});
-  tap.style.display="none";
-};
-
-/* Image Slider */
-const images=[
+/* PHOTO CHANGE — SYNCED */
+const pics=[
  "boomipic/pic1.jpg",
  "boomipic/pic2.jpg",
- "boomipic/pic3.jpg"
+ "boomipic/pic3.jpg",
+ "boomipic/pic4.jpg"
 ];
-let i=0;
+let p=0;
 setInterval(()=>{
- i=(i+1)%images.length;
- document.getElementById("slide").src=images[i];
-},4000);
+  p=(p+1)%pics.length;
+  document.getElementById("cardImg").src=pics[p];
+},6000);
 
-/* Voice */
+/* TYPEWRITER */
+const msg=`Boomi…
+Nee vandhadhukku apram
+en life soft-aa maaruchu.
+
+Naan perfect illa,
+aana nee genuine-aa irundha.
+
+Unna romba miss pannuren.
+Happy Birthday 🤍
+— Mayil`;
+let i=0;
+(function type(){
+  if(i<msg.length){
+    document.getElementById("text").innerHTML+=msg.charAt(i++);
+    setTimeout(type,45);
+  }
+})();
+
+/* VOICE */
 function playVoice(){
-  bgm.pause();
+  bg.pause();
+  bg.currentTime=0;
   document.getElementById("voice").play();
 }
 
-/* Message */
+/* MESSAGE */
 function openMessage(){
- const text=prompt("Type something for me 💗");
- if(!text) return;
-
- const mail=
-  "mailto:kavinmayil123@gmail.com"
-  +"?subject="+encodeURIComponent("Boomi sent a message")
-  +"&body="+encodeURIComponent(text);
-
- window.location.href=mail;
+  document.getElementById("msgBox").style.display="flex";
 }
+function sendMail(){
+  const t=document.getElementById("msgText").value.trim();
+  if(!t)return alert("Please type something 💗");
+  window.location.href=
+   "mailto:kavinmayil123@gmail.com?subject="
+   +encodeURIComponent("Boomi sent a message")
+   +"&body="+encodeURIComponent(t);
+}
+
+/* FLOATING EMOJIS */
+const emojis=["💖","😊","😍","💕","✨"];
+setInterval(()=>{
+  const e=document.createElement("div");
+  e.className="float";
+  e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+  e.style.left=Math.random()*100+"vw";
+  e.style.fontSize=(Math.random()*22+14)+"px";
+  e.style.animationDuration=(Math.random()*4+4)+"s";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),8000);
+},450);
 </script>
 
 </body>
