@@ -9,22 +9,36 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: 'Segoe UI', sans-serif;
+  font-family:'Segoe UI',sans-serif;
 }
 
 body{
-  background: linear-gradient(135deg,#fff0f5,#ffe4ec);
+  background:linear-gradient(135deg,#fff0f6,#ffe4ec);
   overflow:hidden;
-  color:#6a0032;
+  color:#7a003c;
 }
 
-/* SLIDESHOW */
+/* TAP SCREEN */
+#tapScreen{
+  position:fixed;
+  inset:0;
+  background:#fff0f6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  font-size:22px;
+  color:#d6336c;
+  text-align:center;
+  cursor:pointer;
+}
+
+/* SLIDESHOW BACKGROUND */
 .slideshow{
   position:fixed;
   inset:0;
-  z-index:-1;
+  z-index:-2;
 }
-
 .slideshow img{
   position:absolute;
   width:100%;
@@ -32,9 +46,8 @@ body{
   object-fit:cover;
   opacity:0;
   animation:fade 24s infinite;
-  filter: brightness(0.85);
+  filter:brightness(0.9);
 }
-
 .slideshow img:nth-child(1){animation-delay:0s;}
 .slideshow img:nth-child(2){animation-delay:6s;}
 .slideshow img:nth-child(3){animation-delay:12s;}
@@ -52,11 +65,11 @@ body{
   position:fixed;
   inset:0;
   background:rgba(255,255,255,0.75);
+  z-index:-1;
 }
 
 /* CONTENT */
 .content{
-  position:relative;
   height:100vh;
   display:flex;
   flex-direction:column;
@@ -66,40 +79,35 @@ body{
   padding:20px;
   animation:fadeIn 2s ease;
 }
-
 @keyframes fadeIn{
-  from{opacity:0; transform:translateY(30px);}
-  to{opacity:1; transform:translateY(0);}
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
 }
 
 h1{
-  font-size:2.7em;
   color:#d6336c;
-  margin-bottom:8px;
+  font-size:2.7em;
 }
-
 .cake{
   font-size:65px;
-  margin-bottom:12px;
+  margin:8px 0;
 }
 
 /* PHOTO CARD */
 .photo-card{
   width:260px;
   height:360px;
-  border-radius:25px;
-  overflow:hidden;
-  box-shadow:0 20px 40px rgba(214,51,108,0.3);
   background:white;
+  border-radius:25px;
+  box-shadow:0 20px 40px rgba(214,51,108,0.3);
+  overflow:hidden;
   margin:10px 0 18px;
   animation:float 4s ease-in-out infinite;
 }
-
 @keyframes float{
   0%,100%{transform:translateY(0);}
   50%{transform:translateY(-10px);}
 }
-
 .photo-card img{
   width:100%;
   height:100%;
@@ -111,27 +119,52 @@ h1{
   max-width:720px;
   font-size:1.15em;
   line-height:1.9;
-  color:#7a003c;
-  min-height:170px;
+  min-height:160px;
 }
 
-/* BUTTON */
-.voice-btn{
-  margin-top:18px;
+/* BUTTONS */
+.btn{
+  margin-top:12px;
   padding:14px 30px;
-  font-size:16px;
   border-radius:30px;
   border:none;
   background:#ff85a2;
   color:white;
+  font-size:16px;
   cursor:pointer;
   box-shadow:0 8px 20px rgba(255,133,162,0.4);
-  transition:0.3s;
+  transition:.3s;
 }
-
-.voice-btn:hover{
+.btn:hover{
   background:#d6336c;
   transform:scale(1.05);
+}
+
+/* MESSAGE BOX */
+#msgBox{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+}
+#msgInner{
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  width:90%;
+  max-width:350px;
+  text-align:center;
+}
+#msgInner textarea{
+  width:100%;
+  height:100px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  padding:10px;
+  margin-top:10px;
 }
 
 /* FLOATING EMOJIS */
@@ -139,17 +172,18 @@ h1{
   position:fixed;
   bottom:-30px;
   animation:rise linear infinite;
-  opacity:0.8;
+  opacity:0.85;
 }
-
 @keyframes rise{
-  from{transform:translateY(0); opacity:1;}
-  to{transform:translateY(-120vh); opacity:0;}
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-120vh);opacity:0;}
 }
 </style>
 </head>
 
 <body>
+
+<div id="tapScreen">Tap anywhere to begin 💗</div>
 
 <div class="slideshow">
   <img src="boomipic/pic1.jpg">
@@ -170,10 +204,12 @@ h1{
 
   <div id="text"></div>
 
-  <button class="voice-btn" onclick="playVoice()">🎧 Do you hear me?</button>
+  <button class="btn" onclick="playVoice()">🎧 Do you hear me?</button>
+  <button class="btn" onclick="openMessage()">💌 Message me</button>
 </div>
 
-<audio id="bgmusic" autoplay loop>
+<!-- AUDIO -->
+<audio id="bgmusic" loop>
   <source src="bgmusic.mp3" type="audio/mpeg">
 </audio>
 
@@ -181,14 +217,26 @@ h1{
   <source src="voice.mp3" type="audio/mpeg">
 </audio>
 
+<!-- MESSAGE BOX -->
+<div id="msgBox">
+  <div id="msgInner">
+    <h3 style="color:#d6336c;">Send me a message 💗</h3>
+    <textarea id="msgText" placeholder="Type something for me..."></textarea>
+    <br><br>
+    <button class="btn" onclick="sendMail()">Send 💌</button>
+  </div>
+</div>
+
 <script>
-/* PHOTO CARD CHANGE */
-const pics=[
-  "boomipic/pic1.jpg",
-  "boomipic/pic2.jpg",
-  "boomipic/pic3.jpg",
-  "boomipic/pic4.jpg"
-];
+/* START MUSIC ON TAP */
+const bg=document.getElementById("bgmusic");
+document.getElementById("tapScreen").onclick=()=>{
+  bg.play();
+  document.getElementById("tapScreen").style.display="none";
+};
+
+/* PHOTO CHANGE */
+const pics=["boomipic/pic1.jpg","boomipic/pic2.jpg","boomipic/pic3.jpg","boomipic/pic4.jpg"];
 let p=0;
 setInterval(()=>{
   p=(p+1)%pics.length;
@@ -212,25 +260,33 @@ Unna romba miss pannuren.
 Inniku nee sirichaa,
 adhu podhum.
 
-Happy Birthday 🤍
-— Mayil`;
+Happy Birthday 🤍 My Dear Girl`;
 let i=0;
-function type(){
+(function type(){
   if(i<msg.length){
-    document.getElementById("text").innerHTML+=msg.charAt(i);
-    i++;
+    document.getElementById("text").innerHTML+=msg.charAt(i++);
     setTimeout(type,45);
   }
-}
-type();
+})();
 
-/* MUSIC CONTROL */
+/* VOICE */
 function playVoice(){
-  const bg=document.getElementById("bgmusic");
-  const v=document.getElementById("voice");
   bg.pause();
   bg.currentTime=0;
-  v.play();
+  document.getElementById("voice").play();
+}
+
+/* MESSAGE */
+function openMessage(){
+  document.getElementById("msgBox").style.display="flex";
+}
+function sendMail(){
+  const t=document.getElementById("msgText").value.trim();
+  if(!t)return alert("Please type something 💗");
+  window.location.href=
+   "mailto:kavinmayil123@gmail.com?subject="
+   +encodeURIComponent("Boomi sent a message")
+   +"&body="+encodeURIComponent(t);
 }
 
 /* FLOATING EMOJIS */
